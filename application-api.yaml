@@ -1,0 +1,1960 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Application API
+host: testapi.instreamwealth.com
+schemes:
+  - https
+basePath: /instreamapi
+tags:
+  - name: account-controller
+    description: Account Controller
+  - name: client-controller
+    description: Client Controller
+  - name: goal-controller
+    description: Goal Controller
+  - name: income-controller
+    description: Income Controller
+  - name: portfolio-controller
+    description: Portfolio Controller
+paths:
+  /api/v1/client/all:
+    get:
+      tags:
+        - client-controller
+      summary: getAllClient
+      operationId: getAllClientUsingGET
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ClientLiteList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/all/{pageNo}':
+    get:
+      tags:
+        - client-controller
+      summary: getAllClientByPageNo
+      operationId: getAllClientByPageNoUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: pageNo
+          in: path
+          description: pageNo
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ClientLiteList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  /api/v1/client/search:
+    get:
+      tags:
+        - client-controller
+      summary: getAllClientBySearchParam
+      operationId: getAllClientBySearchParamUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ClientLiteList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}':
+    get:
+      tags:
+        - client-controller
+      summary: getClient
+      operationId: getClientUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Client'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    put:
+      tags:
+        - client-controller
+      summary: updateClient
+      operationId: updateClientUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: client
+          description: client
+          required: true
+          schema:
+            $ref: '#/definitions/Client'
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Client'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    delete:
+      tags:
+        - client-controller
+      summary: deleteClient
+      operationId: deleteClientUsingDELETE
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/account':
+    post:
+      tags:
+        - account-controller
+      summary: createAccount
+      operationId: createAccountUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: account
+          description: account
+          required: true
+          schema:
+            $ref: '#/definitions/Account'
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Account'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/account/all':
+    get:
+      tags:
+        - account-controller
+      summary: getAllClientAccounts
+      operationId: getAllClientAccountsUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Account'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/account/contribution/{contributionId}':
+    put:
+      tags:
+        - account-controller
+      summary: updateAccountContribution
+      operationId: updateAccountContributionUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: contribution
+          description: contribution
+          required: true
+          schema:
+            $ref: '#/definitions/Contribution'
+        - name: contributionId
+          in: path
+          description: contributionId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Contribution'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    delete:
+      tags:
+        - account-controller
+      summary: deleteAccountConribution
+      operationId: deleteAccountConributionUsingDELETE
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - name: contributionId
+          in: path
+          description: contributionId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/account/withdrawal/{withdrawalId}':
+    put:
+      tags:
+        - account-controller
+      summary: updateAccountWithdrawal
+      operationId: updateAccountWithdrawalUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: withdrawal
+          description: withdrawal
+          required: true
+          schema:
+            $ref: '#/definitions/Withdrawal'
+        - name: withdrawalId
+          in: path
+          description: withdrawalId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Withdrawal'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    delete:
+      tags:
+        - account-controller
+      summary: deleteAccountWithdrawal
+      operationId: deleteAccountWithdrawalUsingDELETE
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - name: withdrawalId
+          in: path
+          description: withdrawalId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/account/{accountId}':
+    get:
+      tags:
+        - account-controller
+      summary: getAccount
+      operationId: getAccountUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: accountId
+          in: path
+          description: accountId
+          required: true
+          type: integer
+          format: int32
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Account'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    put:
+      tags:
+        - account-controller
+      summary: updateAccount
+      operationId: updateAccountUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: account
+          description: account
+          required: true
+          schema:
+            $ref: '#/definitions/Account'
+        - name: accountId
+          in: path
+          description: accountId
+          required: true
+          type: integer
+          format: int32
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Account'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    delete:
+      tags:
+        - account-controller
+      summary: deleteAccount
+      operationId: deleteAccountUsingDELETE
+      produces:
+        - application/json
+      parameters:
+        - name: accountId
+          in: path
+          description: accountId
+          required: true
+          type: integer
+          format: int32
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/account/{accountId}/contribution':
+    post:
+      tags:
+        - account-controller
+      summary: createAccountContribution
+      operationId: createAccountContributionUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: accountId
+          in: path
+          description: accountId
+          required: true
+          type: integer
+          format: int32
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: contribution
+          description: contribution
+          required: true
+          schema:
+            $ref: '#/definitions/Contribution'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Contribution'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/account/{accountId}/withdrawal':
+    post:
+      tags:
+        - account-controller
+      summary: createAccountWithdrawal
+      operationId: createAccountWithdrawalUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: accountId
+          in: path
+          description: accountId
+          required: true
+          type: integer
+          format: int32
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: withdrawal
+          description: withdrawal
+          required: true
+          schema:
+            $ref: '#/definitions/Withdrawal'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Withdrawal'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/goal':
+    post:
+      tags:
+        - goal-controller
+      summary: createGoal
+      operationId: createGoalUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: goal
+          description: goal
+          required: true
+          schema:
+            $ref: '#/definitions/Goal'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Goal'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/goal/all':
+    get:
+      tags:
+        - goal-controller
+      summary: getAllClientGoals
+      operationId: getAllClientGoalsUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Goal'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/goal/{goalId}':
+    get:
+      tags:
+        - goal-controller
+      summary: getGoal
+      operationId: getGoalUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - name: goalId
+          in: path
+          description: goalId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Goal'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    put:
+      tags:
+        - goal-controller
+      summary: updateGoal
+      operationId: updateGoalUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: goal
+          description: goal
+          required: true
+          schema:
+            $ref: '#/definitions/Goal'
+        - name: goalId
+          in: path
+          description: goalId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Goal'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    delete:
+      tags:
+        - goal-controller
+      summary: deleteGoal
+      operationId: deleteGoalUsingDELETE
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - name: goalId
+          in: path
+          description: goalId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/income':
+    post:
+      tags:
+        - income-controller
+      summary: createIncome
+      operationId: createIncomeUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: income
+          description: income
+          required: true
+          schema:
+            $ref: '#/definitions/Income'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Income'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/income/all':
+    get:
+      tags:
+        - income-controller
+      summary: getAllClientIncomes
+      operationId: getAllClientIncomesUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Income'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/income/{incomeId}':
+    get:
+      tags:
+        - income-controller
+      summary: getAccount
+      operationId: getAccountUsingGET_1
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - name: incomeId
+          in: path
+          description: incomeId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Income'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    put:
+      tags:
+        - income-controller
+      summary: updateIncome
+      operationId: updateIncomeUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: income
+          description: income
+          required: true
+          schema:
+            $ref: '#/definitions/Income'
+        - name: incomeId
+          in: path
+          description: incomeId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Income'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    delete:
+      tags:
+        - income-controller
+      summary: deleteIncome
+      operationId: deleteIncomeUsingDELETE
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - name: incomeId
+          in: path
+          description: incomeId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/portfolio':
+    post:
+      tags:
+        - portfolio-controller
+      summary: createPortfolio
+      operationId: createPortfolioUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: portfolio
+          description: portfolio
+          required: true
+          schema:
+            $ref: '#/definitions/Portfolio'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Portfolio'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/portfolio/all':
+    get:
+      tags:
+        - portfolio-controller
+      summary: getAllClientsPortfolio
+      operationId: getAllClientsPortfolioUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Portfolio'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/portfolio/{portfolioId}':
+    put:
+      tags:
+        - portfolio-controller
+      summary: updatePortfolio
+      operationId: updatePortfolioUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: portfolio
+          description: portfolio
+          required: true
+          schema:
+            $ref: '#/definitions/Portfolio'
+        - name: portfolioId
+          in: path
+          description: portfolioId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Portfolio'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    delete:
+      tags:
+        - portfolio-controller
+      summary: deletePortfolio
+      operationId: deletePortfolioUsingDELETE
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - name: portfolioId
+          in: path
+          description: portfolioId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/portfolio/{portfolioId}/forceDelete':
+    delete:
+      tags:
+        - portfolio-controller
+      summary: forceDelete
+      operationId: forceDeleteUsingDELETE
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - name: portfolioId
+          in: path
+          description: portfolioId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/relationship':
+    post:
+      tags:
+        - client-controller
+      summary: createDependent
+      operationId: createDependentUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: dependent
+          description: dependent
+          required: true
+          schema:
+            $ref: '#/definitions/Dependent'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Dependent'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/relationship/all':
+    get:
+      tags:
+        - client-controller
+      summary: getAllClientDependents
+      operationId: getAllClientDependentsUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Dependent'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+  '/api/v1/client/{clientId}/relationship/{relationshipId}':
+    get:
+      tags:
+        - client-controller
+      summary: getDependent
+      operationId: getDependentUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - name: relationshipId
+          in: path
+          description: relationshipId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Dependent'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    post:
+      tags:
+        - client-controller
+      summary: updateDependent
+      operationId: updateDependentUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: dependent
+          description: dependent
+          required: true
+          schema:
+            $ref: '#/definitions/Dependent'
+        - name: relationshipId
+          in: path
+          description: relationshipId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Dependent'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+    delete:
+      tags:
+        - client-controller
+      summary: deleteDependent
+      operationId: deleteDependentUsingDELETE
+      produces:
+        - application/json
+      parameters:
+        - name: clientId
+          in: path
+          description: clientId
+          required: true
+          type: integer
+          format: int32
+        - name: relationshipId
+          in: path
+          description: relationshipId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      security:
+        - Bearer:
+            - global
+      deprecated: false
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  Account:
+    type: object
+    properties:
+      allocationType:
+        type: string
+      appliesTo:
+        type: integer
+        format: int32
+      appliesToType:
+        type: string
+      clientId:
+        type: integer
+        format: int32
+      contributions:
+        type: array
+        items:
+          $ref: '#/definitions/Contribution'
+      costBasis:
+        type: number
+      currentValue:
+        type: number
+      currentValueLastUpdated:
+        type: string
+        format: date-time
+      custodianAccountNumber:
+        type: string
+      custodianName:
+        type: string
+      id:
+        type: integer
+        format: int32
+      managedStatus:
+        type: string
+      milestones:
+        type: array
+        items:
+          $ref: '#/definitions/Milestone'
+      modelId:
+        type: integer
+        format: int32
+      modelType:
+        type: string
+      name:
+        type: string
+      notes:
+        type: string
+      objectScope:
+        type: string
+      taxType:
+        type: string
+      type:
+        type: string
+      usedInPlans:
+        type: array
+        items:
+          type: string
+      withdrawals:
+        type: array
+        items:
+          $ref: '#/definitions/Withdrawal'
+    title: Account
+  Address:
+    type: object
+    properties:
+      addressLine:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      id:
+        type: integer
+        format: int32
+      state:
+        type: string
+      zip:
+        type: string
+    title: Address
+  Client:
+    type: object
+    properties:
+      addresses:
+        type: array
+        items:
+          $ref: '#/definitions/Address'
+      advisorId:
+        type: integer
+        format: int32
+      company:
+        $ref: '#/definitions/Company'
+      dateOfBirth:
+        type: string
+      emails:
+        type: array
+        items:
+          $ref: '#/definitions/Email'
+      firstName:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+        format: int32
+      lastName:
+        type: string
+      lifeExpectancyAge:
+        type: integer
+        format: int32
+      middleName:
+        type: string
+      milestones:
+        type: array
+        items:
+          $ref: '#/definitions/Milestone'
+      notes:
+        type: string
+      phones:
+        type: array
+        items:
+          $ref: '#/definitions/Phone'
+      retirementAge:
+        type: integer
+        format: int32
+      salutation:
+        type: string
+      status:
+        type: string
+    title: Client
+  ClientLite:
+    type: object
+    properties:
+      clientId:
+        type: integer
+        format: int32
+      dateOfBirth:
+        type: string
+        format: date-time
+      firstName:
+        type: string
+      gender:
+        type: string
+      lastName:
+        type: string
+      lifeExpectancyAge:
+        type: integer
+        format: int32
+      middleName:
+        type: string
+      retirementAge:
+        type: integer
+        format: int32
+      salutation:
+        type: string
+      status:
+        type: string
+    title: ClientLite
+  ClientLiteList:
+    type: object
+    properties:
+      clientLites:
+        type: array
+        items:
+          $ref: '#/definitions/ClientLite'
+      totalNoOfPages:
+        type: integer
+        format: int32
+    title: ClientLiteList
+  Company:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      name:
+        type: string
+      website:
+        type: string
+    title: Company
+  Contribution:
+    type: object
+    properties:
+      accountId:
+        type: integer
+        format: int32
+      annualAmount:
+        type: number
+      description:
+        type: string
+      endDateNum:
+        type: integer
+        format: int32
+      endDateType:
+        type: string
+      endYear:
+        type: integer
+        format: int32
+      futureValue:
+        type: boolean
+      id:
+        type: integer
+        format: int32
+      inflationRate:
+        type: number
+        format: double
+      startDateNum:
+        type: integer
+        format: int32
+      startDateType:
+        type: string
+      startYear:
+        type: integer
+        format: int32
+    title: Contribution
+  Dependent:
+    type: object
+    properties:
+      addresses:
+        type: array
+        items:
+          $ref: '#/definitions/Address'
+      clientId:
+        type: integer
+        format: int32
+      coClient:
+        type: boolean
+      company:
+        $ref: '#/definitions/Company'
+      dateOfBirth:
+        type: string
+      emails:
+        type: array
+        items:
+          $ref: '#/definitions/Email'
+      firstName:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+        format: int32
+      lastName:
+        type: string
+      lifeExpectancyAge:
+        type: integer
+        format: int32
+      middleName:
+        type: string
+      milestones:
+        type: array
+        items:
+          $ref: '#/definitions/Milestone'
+      notes:
+        type: string
+      phones:
+        type: array
+        items:
+          $ref: '#/definitions/Phone'
+      relationshipType:
+        type: string
+      retirementAge:
+        type: integer
+        format: int32
+      salutation:
+        type: string
+      status:
+        type: string
+    title: Dependent
+  Education:
+    type: object
+    properties:
+      institutionId:
+        type: integer
+        format: int32
+      institutionName:
+        type: string
+      institutionState:
+        type: string
+      roomAndBoardFees:
+        type: number
+        format: double
+      tuitionFees:
+        type: number
+        format: double
+    title: Education
+  Email:
+    type: object
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+        format: int32
+      notes:
+        type: string
+      type:
+        type: string
+    title: Email
+  Goal:
+    type: object
+    properties:
+      annualAmount:
+        type: number
+      appliesTo:
+        type: integer
+        format: int32
+      appliesToType:
+        type: string
+      clientId:
+        type: integer
+        format: int32
+      description:
+        type: string
+      education:
+        $ref: '#/definitions/Education'
+      endDateNum:
+        type: integer
+        format: int32
+      endDateType:
+        type: string
+      endYear:
+        type: integer
+        format: int32
+      futureValue:
+        type: boolean
+      id:
+        type: integer
+        format: int32
+      inflationRate:
+        type: number
+      milestones:
+        type: array
+        items:
+          $ref: '#/definitions/Milestone'
+      name:
+        type: string
+      notes:
+        type: string
+      objectScope:
+        type: string
+        enum:
+          - FIRM
+          - ADVISOR
+          - PLAN
+          - CLIENT
+          - GLOBAL
+          - ENTERPRISE
+          - ALL
+          - BAM
+          - ORION
+          - PORTFOLIO_CENTER
+          - TDA
+          - REDTAIL
+          - BLUELEAF
+          - CSV
+          - ALBRIDGE
+          - BLACKDIAMOND
+          - QUOVO
+      startDateNum:
+        type: integer
+        format: int32
+      startDateType:
+        type: string
+      startYear:
+        type: integer
+        format: int32
+      type:
+        type: string
+        enum:
+          - RETIREMENT
+          - EDUCATION
+          - LEGACY
+          - LIFESTYLE
+      usedInPlans:
+        type: array
+        items:
+          type: string
+    title: Goal
+  Holding:
+    type: object
+    properties:
+      assetClassId:
+        type: integer
+        format: int32
+      price:
+        type: number
+      quantity:
+        type: number
+      tickerName:
+        type: string
+      tickerSymbol:
+        type: string
+      value:
+        type: number
+    title: Holding
+  Income:
+    type: object
+    properties:
+      annualAmount:
+        type: number
+      appliesTo:
+        type: integer
+        format: int32
+      appliesToType:
+        type: string
+      clientId:
+        type: integer
+        format: int32
+      endDateNum:
+        type: integer
+        format: int32
+      endDateType:
+        type: string
+      endYear:
+        type: integer
+        format: int32
+      futureValue:
+        type: boolean
+      id:
+        type: integer
+        format: int32
+      includedInTaxGlidePath:
+        type: boolean
+      inflationRate:
+        type: number
+      milestones:
+        type: array
+        items:
+          $ref: '#/definitions/Milestone'
+      name:
+        type: string
+      notes:
+        type: string
+      startDateNum:
+        type: integer
+        format: int32
+      startDateType:
+        type: string
+      startYear:
+        type: integer
+        format: int32
+      taxClassification:
+        $ref: '#/definitions/IncomeTaxClassification'
+      type:
+        type: string
+      usedInPlans:
+        type: array
+        items:
+          type: string
+    title: Income
+  IncomeTaxClassification:
+    type: object
+    properties:
+      interest:
+        type: number
+      longTermCapitalGain:
+        type: number
+      ordinary:
+        type: number
+      shortTermCapitalGain:
+        type: number
+      untaxed:
+        type: number
+      untaxedInterest:
+        type: number
+    title: IncomeTaxClassification
+  Milestone:
+    type: object
+    properties:
+      alertEnabled:
+        type: boolean
+      alertEventPriorityType:
+        type: string
+      alertEventReminderNum:
+        type: integer
+        format: int32
+      alertEventReminderType:
+        type: string
+      date:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+        format: int32
+    title: Milestone
+  Phone:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      number:
+        type: string
+      preferred:
+        type: boolean
+      type:
+        type: string
+    title: Phone
+  Portfolio:
+    type: object
+    properties:
+      clientId:
+        type: integer
+        format: int32
+      holdings:
+        type: array
+        items:
+          $ref: '#/definitions/Holding'
+      portfolioId:
+        type: integer
+        format: int32
+      portfolioName:
+        type: string
+      returnRate:
+        type: number
+      standardDeviation:
+        type: number
+    title: Portfolio
+  StringResponse:
+    type: object
+    properties:
+      responseMessage:
+        type: string
+    title: StringResponse
+  Withdrawal:
+    type: object
+    properties:
+      accountId:
+        type: integer
+        format: int32
+      annualAmount:
+        type: number
+      description:
+        type: string
+      endDateNum:
+        type: integer
+        format: int32
+      endDateType:
+        type: string
+      endYear:
+        type: integer
+        format: int32
+      futureValue:
+        type: boolean
+      id:
+        type: integer
+        format: int32
+      inflationRate:
+        type: number
+        format: double
+      startDateNum:
+        type: integer
+        format: int32
+      startDateType:
+        type: string
+      startYear:
+        type: integer
+        format: int32
+    title: Withdrawal
